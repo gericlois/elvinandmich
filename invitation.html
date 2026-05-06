@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elvin &amp; Michelle · Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  :root {
+    --paper: #fbf7f0;
+    --ink: #2a2620;
+    --ink-soft: #4a443c;
+    --muted: #8a8278;
+    --hairline: #c8bfae;
+    --accent: #6B7A4B;     /* olive — matches dress code */
+    --terracotta: #C26B4A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #d8d3c8;
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Floating print toolbar (screen only) ---------- */
+  .toolbar {
+    position: fixed;
+    top: 18px; right: 18px;
+    z-index: 200;
+    display: flex;
+    gap: 10px;
+  }
+  .toolbar a, .toolbar button {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .toolbar a { background: #6a6258; }
+  .toolbar button:hover { background: var(--accent); }
+  .toolbar a:hover { background: var(--ink); }
+
+  /* ---------- A4 PAGE ---------- */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 24px auto;
+    background: var(--paper);
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,255,255,0.7) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(108,90,60,0.06) 0%, transparent 70%);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Decorative double frame */
+  .frame-outer {
+    position: absolute;
+    top: 10mm; left: 10mm; right: 10mm; bottom: 10mm;
+    border: 0.4mm solid var(--hairline);
+    pointer-events: none;
+  }
+  .frame-inner {
+    position: absolute;
+    top: 12mm; left: 12mm; right: 12mm; bottom: 12mm;
+    border: 0.2mm solid var(--hairline);
+    pointer-events: none;
+  }
+  /* Corner flourishes */
+  .frame-outer::before, .frame-outer::after,
+  .frame-inner::before, .frame-inner::after {
+    content: '';
+    position: absolute;
+    width: 6mm; height: 6mm;
+    background:
+      linear-gradient(var(--accent), var(--accent)) top left / 100% 0.3mm no-repeat,
+      linear-gradient(var(--accent), var(--accent)) top left / 0.3mm 100% no-repeat;
+  }
+  .frame-outer::before { top: -0.5mm; left: -0.5mm; }
+  .frame-outer::after  { top: -0.5mm; right: -0.5mm; transform: rotate(90deg); }
+  .frame-inner::before { bottom: -0.5mm; left: -0.5mm; transform: rotate(-90deg); }
+  .frame-inner::after  { bottom: -0.5mm; right: -0.5mm; transform: rotate(180deg); }
+
+  .content {
+    position: relative;
+    padding: 22mm 22mm 20mm;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* ---------- PAGE 1: COVER ---------- */
+  .photo-vignette {
+    width: 56mm;
+    height: 56mm;
+    border-radius: 50%;
+    margin: 2mm auto 8mm;
+    background-image: url('images/c4620908-b16d-4d69-8fae-54d740fc6d53.jpg');
+    background-size: cover;
+    background-position: center 35%;
+    border: 1mm solid var(--paper);
+    box-shadow: 0 0 0 0.3mm var(--hairline);
+    filter: saturate(0.92);
+  }
+
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9pt;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .names {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 70pt;
+    line-height: 0.95;
+    color: var(--ink);
+    margin: 6mm 0 5mm;
+    font-weight: 400;
+  }
+  .names .amp { color: var(--accent); }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6mm;
+    margin: 4mm 0 6mm;
+    color: var(--accent);
+  }
+  .ornament .line {
+    width: 28mm;
+    height: 0.3mm;
+    background: var(--hairline);
+  }
+  .ornament .dot {
+    width: 2mm; height: 2mm;
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .invite-line {
+    font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13pt;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0 0 8mm;
+  }
+
+  .verse {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11.5pt;
+    color: var(--ink);
+    line-height: 1.6;
+    max-width: 130mm;
+    margin: 0 auto 2mm;
+  }
+  .verse-ref {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8mm;
+  }
+
+  /* Date block */
+  .date-block {
+    margin: 4mm 0 8mm;
+  }
+  .day-of-week {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10pt;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 5mm;
+  }
+  .date-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8mm;
+  }
+  .date-row .month, .date-row .year {
+    font-family: 'Playfair Display', serif;
+    font-size: 14pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .date-row .day-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42pt;
+    line-height: 1;
+    border-top: 0.3mm solid var(--hairline);
+    border-bottom: 0.3mm solid var(--hairline);
+    padding: 3mm 7mm;
+    color: var(--ink);
+  }
+  .time {
+    font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13pt;
+    color: var(--ink);
+    margin-top: 5mm;
+  }
+  .calltime {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2mm;
+  }
+
+  /* Venue */
+  .venue-block { margin: 2mm 0 6mm; }
+  .venue-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24pt;
+    color: var(--ink);
+    margin-bottom: 2mm;
+    font-weight: 500;
+  }
+  .venue-addr {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 11pt;
+    color: var(--ink-soft);
+  }
+
+  /* Attire */
+  .attire-block { margin-top: auto; }
+  .attire-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4mm;
+  }
+  .palette {
+    display: flex;
+    justify-content: center;
+    gap: 5mm;
+    margin-bottom: 3mm;
+  }
+  .palette .chip {
+    width: 7mm; height: 7mm;
+    border-radius: 50%;
+    border: 0.2mm solid var(--hairline);
+  }
+  .attire-text {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 10pt;
+    color: var(--ink-soft);
+    margin-bottom: 6mm;
+  }
+  .rsvp-line {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 0.2mm solid var(--hairline);
+    padding-top: 4mm;
+  }
+
+  /* ---------- PAGE 2: ENTOURAGE ---------- */
+  .p2 .content { padding: 18mm 22mm 16mm; }
+
+  .p2-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9pt;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3mm;
+  }
+  .p2-names {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 38pt;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 2mm;
+  }
+  .p2-names .amp { color: var(--accent); }
+  .p2-date {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8mm;
+  }
+
+  .p2-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20pt;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .p2-rule {
+    width: 30mm;
+    height: 0.3mm;
+    background: var(--hairline);
+    margin: 4mm auto 8mm;
+  }
+
+  .role {
+    margin: 3mm 0;
+  }
+  .role-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1mm;
+  }
+  .role-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 12pt;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .group-head {
+    margin: 6mm 0 3mm;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5mm;
+  }
+  .group-head::before, .group-head::after {
+    content: '';
+    width: 14mm;
+    height: 0.3mm;
+    background: var(--hairline);
+  }
+
+  .pair-list {
+    list-style: none;
+    columns: 2;
+    column-gap: 12mm;
+    max-width: 150mm;
+    margin: 2mm auto 0;
+    text-align: center;
+  }
+  .pair-list li {
+    font-family: 'Playfair Display', serif;
+    font-size: 11pt;
+    padding: 1mm 0;
+    color: var(--ink);
+    break-inside: avoid;
+  }
+
+  .closing {
+    margin-top: auto;
+    padding-top: 6mm;
+  }
+  .closing p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 11pt;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 140mm;
+    margin: 0 auto 4mm;
+  }
+  .closing .sig {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 32pt;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .closing .sig .amp { color: var(--accent); }
+
+  /* ---------- PRINT ---------- */
+  @media print {
+    html, body {
+      background: #fff;
+    }
+    .toolbar { display: none !important; }
+    .page {
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="index.html">← Site</a>
+  <button onclick="window.print()">Print Invitation</button>
+</div>
+
+<!-- ============ PAGE 1 — COVER ============ -->
+<div class="page">
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+
+  <div class="content">
+
+    <p class="eyebrow" style="margin-top: 8mm;">Together with their families</p>
+
+    <h1 class="names">Elvin <span class="amp">&amp;</span> Michelle</h1>
+
+    <div class="ornament">
+      <div class="line"></div>
+      <div class="dot"></div>
+      <div class="line"></div>
+    </div>
+
+    <p class="invite-line">request the honour of your presence<br>at the celebration of their holy matrimony</p>
+
+    <p class="verse">&ldquo;Love is patient, love is kind. It always protects, always trusts, always hopes, always perseveres.&rdquo;</p>
+    <p class="verse-ref">— 1 Corinthians 13:4–7</p>
+
+    <div class="date-block">
+      <div class="day-of-week">Friday</div>
+      <div class="date-row">
+        <span class="month">May</span>
+        <span class="day-num">29</span>
+        <span class="year">2026</span>
+      </div>
+      <div class="time">at three o'clock in the afternoon</div>
+      <div class="calltime">Call Time · 1:00 PM</div>
+    </div>
+
+    <div class="venue-block">
+      <div class="venue-name">La Sede</div>
+      <div class="venue-addr">Bangbangolan, San Fernando City, La Union</div>
+    </div>
+
+    <div class="attire-block">
+      <div class="attire-label">Dress Code · Earth Tones</div>
+      <div class="palette">
+        <div class="chip" style="background:#6B7A4B"></div>
+        <div class="chip" style="background:#5C3A21"></div>
+        <div class="chip" style="background:#C26B4A"></div>
+        <div class="chip" style="background:#E8DCC4"></div>
+        <div class="chip" style="background:#D9C9A8"></div>
+      </div>
+      <div class="attire-text">Olive · Brown · Terracotta · Champagne · Beige</div>
+      <div class="rsvp-line">Kindly respond by May 1, 2026</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ PAGE 2 — ENTOURAGE ============ -->
+<div class="page p2">
+  <div class="frame-outer"></div>
+  <div class="frame-inner"></div>
+
+  <div class="content">
+
+    <p class="p2-eyebrow">With Honor</p>
+    <h2 class="p2-names">Elvin <span class="amp">&amp;</span> Michelle</h2>
+    <p class="p2-date">May 29 · 2026 · La Union</p>
+
+    <h3 class="p2-title">Our People</h3>
+    <div class="p2-rule"></div>
+
+    <div class="role">
+      <div class="role-label">Best Man</div>
+      <div class="role-names">Geric Casugay</div>
+    </div>
+
+    <div class="role">
+      <div class="role-label">Matron of Honor</div>
+      <div class="role-names">Michaelle &ldquo;Ella&rdquo; Saluta-Suriben</div>
+    </div>
+
+    <div class="group-head">Secondary Sponsors</div>
+
+    <div class="role">
+      <div class="role-label">Candle</div>
+      <div class="role-names">Juliny Grace Bautista &amp; Ferds</div>
+    </div>
+    <div class="role">
+      <div class="role-label">Veil</div>
+      <div class="role-names">Gerianne Casugay &amp; Michael Justine Saluta</div>
+    </div>
+    <div class="role">
+      <div class="role-label">Cord</div>
+      <div class="role-names">Erika Casugay &amp; Miguel Benidecto Saluta Jr.</div>
+    </div>
+
+    <div class="group-head">Groomsmen &amp; Bridesmaids</div>
+    <ul class="pair-list">
+      <li>John Paolo Saluta &amp; Trisha Quiros</li>
+      <li>Mickey Torres &amp; Diane Dela Cruz</li>
+      <li>Steven Mendoza &amp; Samantha Nicole Saluta</li>
+      <li>Michael Angelo Fabrigas &amp; Lyra Angel Saluta</li>
+      <li>Justine Ryan Carig &amp; Emma Thalia Yangyang</li>
+      <li>Aaron Almojela &amp; Princess Gacayan</li>
+    </ul>
+
+    <div class="group-head">Bearers &amp; Flower Girls</div>
+
+    <div class="role">
+      <div class="role-label">Flower Girls</div>
+      <div class="role-names">Amanda Cabanban · Kassandra Flor Reyes · Luna Villalobos</div>
+    </div>
+
+    <div class="role">
+      <div class="role-label">Little Pairs</div>
+      <div class="role-names">Jaems Chloe Llen Magtibay &amp; Liam Gavin Jeth Palic-ad<br>Allexandra Kelsey Reyes &amp; Sebastian Abrahm Pablo Saluta</div>
+    </div>
+
+    <div class="role">
+      <div class="role-label">Ring · Bible · Coin</div>
+      <div class="role-names">Janong &nbsp;·&nbsp; Raphael Elias Floria &nbsp;·&nbsp; Jayden Loukas Ventura</div>
+    </div>
+
+    <div class="closing">
+      <p>Your presence is the greatest gift we could ask for. Should you wish to bless our new home further, a monetary contribution would be deeply cherished.</p>
+      <div class="sig">Elvin <span class="amp">&amp;</span> Michelle</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
