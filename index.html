@@ -654,6 +654,32 @@
     border: 1px solid var(--hairline);
   }
 
+  /* ---------- PARENTS GRID ---------- */
+  .parents-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 760px;
+    margin: 20px auto 60px;
+    text-align: center;
+  }
+  .parents-grid .group-heading {
+    margin: 0 0 14px;
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+  .parents-grid .group-heading::before,
+  .parents-grid .group-heading::after {
+    width: 18px;
+    margin: 0 10px;
+  }
+  .parents-grid .role-block {
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    .parents-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+  }
+
   /* ---------- ENTOURAGE ---------- */
   .role-block {
     margin: 36px 0;
@@ -1189,14 +1215,19 @@
   <h2 class="section-title caps">People</h2>
   <div class="underline"></div>
 
-  <div class="group-heading">Parents of the Bride</div>
-  <div class="role-block">
-    <div class="role-names">Mr. Miguel Benidecto C. Saluta<br>Ms. Mirasol D. Villalobos</div>
-  </div>
-
-  <div class="group-heading">Parents of the Groom</div>
-  <div class="role-block">
-    <div class="role-names">Mr. Gerardo Casugay Jr.<br>Mrs. Estrellita Casugay</div>
+  <div class="parents-grid">
+    <div>
+      <div class="group-heading">Parents of the Bride</div>
+      <div class="role-block">
+        <div class="role-names">Mr. Miguel Benidecto C. Saluta<br>Ms. Mirasol D. Villalobos</div>
+      </div>
+    </div>
+    <div>
+      <div class="group-heading">Parents of the Groom</div>
+      <div class="role-block">
+        <div class="role-names">Mr. Gerardo Casugay Jr.<br>Mrs. Estrellita Casugay</div>
+      </div>
+    </div>
   </div>
 
   <div class="group-heading">Principal Witnesses</div>
