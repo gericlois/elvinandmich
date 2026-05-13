@@ -47,7 +47,10 @@
     z-index: 50;
     padding: 12px 24px;
     text-align: center;
+    transform: translateY(-100%);
+    transition: transform 0.45s ease;
   }
+  nav.top.scrolled { transform: translateY(0); }
   nav.top a {
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
@@ -62,72 +65,196 @@
   nav.top a:hover { color: var(--accent); }
   nav.top .nav-toggle { display: none; }
 
-  /* ---------- HERO ---------- */
+  /* ---------- HERO (full-screen cover) ---------- */
   .hero {
     position: relative;
-    min-height: 100vh;
-    background: #f0ebe3;
+    height: 100vh;
+    min-height: 640px;
+    background-color: #1a1a1a;
+    background-image: url('images/cover.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 80px 40px 60px;
     overflow: hidden;
+    color: #fff;
+    padding: clamp(80px, 9vh, 120px) 0 0;
   }
-  .hero-heading {
-    font-family: 'Pinyon Script', cursive;
-    font-size: clamp(48px, 9vw, 90px);
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.35) 100%);
+    z-index: 1;
+  }
+  .hero-frame {
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(255,255,255,0.35);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-brand {
+    position: absolute;
+    top: 38px;
+    left: 52px;
+    z-index: 4;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
     font-weight: 400;
-    line-height: 1.15;
-    color: var(--ink);
-    text-align: center;
-    margin: 0 0 36px;
-    max-width: 800px;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: #f3c8c2;
+    text-decoration: none;
   }
-  .hero-polaroid {
-    position: relative;
-    background: #fff;
-    padding: 10px 10px 40px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    transform: rotate(-3deg);
-    margin-bottom: 40px;
-  }
-  .hero-polaroid img {
-    width: 340px;
-    height: 340px;
-    object-fit: cover;
-    display: block;
-  }
-  @media (max-width: 500px) {
-    .hero-polaroid img { width: 260px; height: 260px; }
-    .hero-polaroid { padding: 8px 8px 36px; }
-  }
-  .hero-details {
-    width: 100%;
-    max-width: 900px;
+  .hero-nav {
+    position: absolute;
+    top: 42px;
+    right: 52px;
+    z-index: 4;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: auto;
-    padding-top: 30px;
+    gap: 26px;
   }
-  .hero-details .hero-when,
-  .hero-details .hero-where {
+  .hero-nav a {
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    color: var(--ink);
-    line-height: 1.8;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
   }
-  .hero-details .hero-where {
-    text-align: right;
+  .hero-nav a:hover { opacity: 1; }
+  .hero-inner {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff;
+    padding: 0 24px;
   }
-  @media (max-width: 600px) {
-    .hero { padding: 70px 24px 40px; }
-    .hero-details { flex-direction: column; align-items: center; gap: 16px; }
-    .hero-details .hero-where { text-align: center; }
-    .hero-details .hero-when { text-align: center; }
+  .hero-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    margin: 0 0 38px;
+    color: #fff;
+    opacity: 0.95;
+  }
+  .hero-names {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(72px, 13vw, 180px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  }
+  .hero-names .amp {
+    display: block;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(34px, 5vw, 60px);
+    line-height: 1.6;
+    color: #fff;
+    opacity: 0.95;
+  }
+  .hero-meta {
+    margin: 40px 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.92;
+  }
+  .hero-meta .dot {
+    display: inline-block;
+    margin: 0 14px;
+    opacity: 0.7;
+    transform: translateY(-2px);
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 34px;
+    background: rgba(255,255,255,0.85);
+    margin: 12px auto 0;
+  }
+
+  /* Falling petals */
+  .petals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .petal {
+    position: absolute;
+    top: -40px;
+    width: 12px;
+    height: 16px;
+    background: #f6c0bd;
+    border-radius: 60% 40% 60% 40% / 60% 40% 60% 40%;
+    opacity: 0.75;
+    animation: petalFall linear infinite;
+  }
+  .petal:nth-child(2) { background: #fff; opacity: 0.55; }
+  .petal:nth-child(5) { background: #fff; opacity: 0.55; }
+  .petal:nth-child(8) { background: #fff; opacity: 0.55; }
+  .petal:nth-child(11){ background: #fff; opacity: 0.55; }
+  .petal:nth-child(1)  { left:  6%; animation-duration: 11s; animation-delay:  0s;  width: 10px; height: 14px; }
+  .petal:nth-child(2)  { left: 14%; animation-duration:  9s; animation-delay: -3s;  width: 14px; height: 18px; }
+  .petal:nth-child(3)  { left: 22%; animation-duration: 13s; animation-delay: -6s;  width:  8px; height: 12px; }
+  .petal:nth-child(4)  { left: 31%; animation-duration: 10s; animation-delay: -1s;  width: 12px; height: 16px; }
+  .petal:nth-child(5)  { left: 39%; animation-duration: 14s; animation-delay: -8s;  width: 16px; height: 20px; }
+  .petal:nth-child(6)  { left: 47%; animation-duration:  8s; animation-delay: -2s;  width:  9px; height: 13px; }
+  .petal:nth-child(7)  { left: 56%; animation-duration: 12s; animation-delay: -5s;  width: 13px; height: 17px; }
+  .petal:nth-child(8)  { left: 64%; animation-duration: 10s; animation-delay: -7s;  width: 11px; height: 15px; }
+  .petal:nth-child(9)  { left: 72%; animation-duration: 15s; animation-delay: -4s;  width: 14px; height: 18px; }
+  .petal:nth-child(10) { left: 80%; animation-duration:  9s; animation-delay: -9s;  width:  9px; height: 13px; }
+  .petal:nth-child(11) { left: 88%; animation-duration: 13s; animation-delay: -2s;  width: 15px; height: 19px; }
+  .petal:nth-child(12) { left: 95%; animation-duration: 11s; animation-delay: -6s;  width: 10px; height: 14px; }
+  @keyframes petalFall {
+    0%   { transform: translate3d(0, -60px, 0) rotate(0deg);   opacity: 0; }
+    8%   { opacity: 0.85; }
+    100% { transform: translate3d(40px, 110vh, 0) rotate(540deg); opacity: 0.7; }
+  }
+
+  @media (max-width: 700px) {
+    .hero-frame { inset: 14px; }
+    .hero-brand { top: 26px; left: 28px; font-size: 18px; letter-spacing: 2px; }
+    .hero-nav   { top: 30px; right: 28px; gap: 14px; }
+    .hero-nav a { font-size: 9px; letter-spacing: 2px; }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 4px; margin-bottom: 26px; }
+    .hero-meta { font-size: 10px; letter-spacing: 3px; margin-top: 28px; }
+    .hero-meta .dot { margin: 0 8px; }
+    .hero-scroll { bottom: 36px; }
+  }
+  @media (max-width: 460px) {
+    .hero-nav { display: none; }
+    .hero-meta { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+    .hero-meta .dot { display: none; }
   }
 
   /* ---------- POLAROID STYLE ---------- */
@@ -211,17 +338,33 @@
     gap: 56px;
     align-items: center;
   }
-  .story-photo {
-    background: #fff;
-    padding: 10px 10px 44px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
-    transform: rotate(-2deg);
+  .story-collage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 18px;
+    padding: 10px 6px;
   }
-  .story-photo img {
+  .story-collage .snap {
+    background: #fff;
+    padding: 8px 8px 26px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .story-collage .snap img {
     width: 100%;
-    aspect-ratio: 4/5;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     display: block;
+  }
+  .story-collage .snap:nth-child(1) { transform: rotate(-4deg); }
+  .story-collage .snap:nth-child(2) { transform: rotate(3deg) translateY(14px); }
+  .story-collage .snap:nth-child(3) { transform: rotate(2deg) translateY(-8px); }
+  .story-collage .snap:nth-child(4) { transform: rotate(-2deg) translateY(6px); }
+  .story-collage .snap:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.20);
+    z-index: 3;
+    position: relative;
   }
   .story-text p {
     font-family: 'EB Garamond', serif;
@@ -249,7 +392,7 @@
   }
   @media (max-width: 760px) {
     .story-inner { grid-template-columns: 1fr; gap: 32px; }
-    .story-photo { max-width: 300px; margin: 0 auto; }
+    .story-collage { max-width: 420px; margin: 0 auto; }
     .signature { text-align: center; }
   }
 
@@ -1430,14 +1573,35 @@
 
 <!-- HERO -->
 <header class="hero" id="hero">
-  <h1 class="hero-heading">Elvin &amp; Michelle<br>are getting married!</h1>
-  <div class="hero-polaroid">
-    <img src="images/6aa526f5-fc15-4e6f-98b9-2b421718f420.jpg" alt="Elvin &amp; Michelle" />
+  <div class="hero-frame"></div>
+
+  <div class="petals" aria-hidden="true">
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    <span class="petal"></span><span class="petal"></span><span class="petal"></span>
   </div>
-  <div class="hero-details">
-    <div class="hero-when">3:00 PM<br>May 29, 2026</div>
-    <div class="hero-where">La Sede<br>Bangbangolan, San<br>Fernando City, La Union</div>
+
+  <a href="#hero" class="hero-brand">E &amp; M</a>
+  <nav class="hero-nav">
+    <a href="#story">Story</a>
+    <a href="#schedule">Details</a>
+    <a href="#entourage">Entourage</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#rsvp">RSVP</a>
+  </nav>
+
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Together with their families</p>
+    <h1 class="hero-names">
+      Elvin
+      <span class="amp">&amp;</span>
+      Michelle
+    </h1>
+    <p class="hero-meta"><span>May 29, 2026</span><span class="dot">•</span><span>San Fernando City, La Union</span></p>
   </div>
+
+  <a href="#story" class="hero-scroll">Scroll</a>
 </header>
 
 <!-- COUNTDOWN (olive banner) -->
@@ -1456,8 +1620,11 @@
   <h2 class="section-title">Our Story</h2>
   <div class="underline"></div>
   <div class="story-inner">
-    <div class="story-photo">
-      <img src="images/3428d9c6-d12a-4111-b272-3a82bbd1ccf9.jpg" alt="Elvin &amp; Michelle" />
+    <div class="story-collage">
+      <div class="snap"><img src="images/old/3428d9c6-d12a-4111-b272-3a82bbd1ccf9.jpg" alt="Elvin &amp; Michelle" /></div>
+      <div class="snap"><img src="images/old/81443b89-db2c-4417-9fdb-c8337e48fd16.jpg" alt="Elvin &amp; Michelle" /></div>
+      <div class="snap"><img src="images/old/fbf1643a-a5d9-4d86-84cb-3152b40f7e61.jpg" alt="Elvin &amp; Michelle" /></div>
+      <div class="snap"><img src="images/old/c4620908-b16d-4d69-8fae-54d740fc6d53.jpg" alt="Elvin &amp; Michelle" /></div>
     </div>
     <div class="story-text">
       <p>Our story began in 2013 — classmates in CPRT, sharing the same lecture halls long before we became anything more to each other. For years we were friends, seatmates, and study partners; the kind of pair people always seemed to find together. In 2019, we finally stopped pretending it was anything else and chose each other for good. Today, we still share an office — workmates by day, partners through everything else. From classmates, to lovers, to workmates, and now on May 29, to husband and wife. Hello po mga ka-PAMILYA — we cannot wait to see your faces in the room.</p>
@@ -1474,36 +1641,28 @@
 
   <div class="gallery-grid">
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/fbf1643a-a5d9-4d86-84cb-3152b40f7e61.jpg');"></div>
-      <div class="caption">Where It Began</div>
+      <div class="tile-img" style="background-image:url('images/DSC00074.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/81443b89-db2c-4417-9fdb-c8337e48fd16.jpg');"></div>
-      <div class="caption">Golden Hour</div>
+      <div class="tile-img" style="background-image:url('images/DSC00083.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/9d09de4c-8261-4556-afd7-c4814d163f92.jpg');"></div>
-      <div class="caption">Hidden Coves</div>
+      <div class="tile-img" style="background-image:url('images/DSC00120.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/400eb7ce-468f-4b0f-b384-9857c9983377.jpg');"></div>
-      <div class="caption">Workmates</div>
+      <div class="tile-img" style="background-image:url('images/DSC00134.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/36c14bdd-f74e-41ac-84af-1f594094483f.jpg');"></div>
-      <div class="caption">Date Nights</div>
+      <div class="tile-img" style="background-image:url('images/DSC00175.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/6aa526f5-fc15-4e6f-98b9-2b421718f420.jpg');"></div>
-      <div class="caption">Slow Dinners</div>
+      <div class="tile-img" style="background-image:url('images/DSC00186.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/f001db85-2400-49cc-98a0-ff3e9f222c49.jpg');"></div>
-      <div class="caption">Family</div>
+      <div class="tile-img" style="background-image:url('images/DSC00198.jpg');"></div>
     </div>
     <div class="tile polaroid">
-      <div class="tile-img" style="background-image:url('images/c4620908-b16d-4d69-8fae-54d740fc6d53.jpg');"></div>
-      <div class="caption">Always Together</div>
+      <div class="tile-img" style="background-image:url('images/DSC00204.jpg');"></div>
     </div>
   </div>
 </section>
@@ -1704,7 +1863,7 @@
         <div>
           <div class="group-heading">Parents of the Bride</div>
           <div class="role-block">
-            <div class="role-names">Mr. Miguel Benidecto C. Saluta<br>Ms. Mirasol D. Villalobos</div>
+            <div class="role-names">Mr. Miguel Benidecto C. Saluta<br>Mrs. Mirasol Saluta</div>
           </div>
         </div>
         <div>
@@ -1722,7 +1881,7 @@
       </div>
       <div class="role-block">
         <div class="role-title">Matron of Honor</div>
-        <div class="role-names">Michaelle "Ella" Saluta-Suriben</div>
+        <div class="role-names">Michaelle Saluta-Suriben</div>
       </div>
     </div>
 
@@ -1747,7 +1906,7 @@
   <div class="gm-bm-grid">
     <ul class="pair-list">
       <li>John Paolo Saluta &amp; Trisha Quiros</li>
-      <li>Mickey Mitchell Kier Torres &amp; Diana Rose Dela Cruz</li>
+      <li>Mitchell Kier Torres &amp; Diana Rose Dela Cruz</li>
       <li>Steven Mendoza &amp; Samantha Nicole Saluta</li>
     </ul>
     <ul class="pair-list">
@@ -1885,6 +2044,17 @@
 </footer>
 
 <script>
+  // ---------- Nav reveal on scroll ----------
+  (function () {
+    var topNav = document.querySelector('nav.top');
+    if (!topNav) return;
+    var onScroll = function () {
+      topNav.classList.toggle('scrolled', window.scrollY > 120);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
   // ---------- YouTube IFrame API ----------
   var ytPlayer = null;
   var ytReady = false;
@@ -1938,8 +2108,14 @@
   const envelopeOverlay = document.getElementById('envelopeOverlay');
   let envelopeOpened = false;
 
+  // Stop the browser from restoring previous scroll position on reload
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   envelopeWrapper.addEventListener('click', function() {
     if (!envelopeOpened) {
+      // Always start the experience from the very top
+      window.scrollTo(0, 0);
       envelopeWrapper.classList.add('open');
       envelopeOpened = true;
       startMusic();
